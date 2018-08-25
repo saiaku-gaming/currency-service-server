@@ -1,0 +1,1 @@
+ALTER TABLE actionbar_item RENAME COLUMN username TO character_name;
