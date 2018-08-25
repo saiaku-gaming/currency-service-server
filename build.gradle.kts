@@ -138,7 +138,7 @@ tasks.create<DockerTask>("buildDocker") {
 	baseImage = "frolvlad/alpine-oraclejdk8:slim"
 	registry = "https://registry.valhalla-game.com"
 	if(project.hasProperty("tagVersion")) {
-		tagVersion = getProperty("tagVersion") as String
+		tagVersion = project.properties["tagVersion"] as String
 	}
 	push = true
     tag = "registry.valhalla-game.com/saiaku/${application.applicationName}"
