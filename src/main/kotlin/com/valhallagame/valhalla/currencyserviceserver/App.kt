@@ -1,4 +1,4 @@
-package com.valhallagame.valhalla.actionbarserviceserver
+package com.valhallagame.valhalla.currencyserviceserver
 
 import com.valhallagame.common.DefaultServicePortMappings
 import org.slf4j.Logger
@@ -19,7 +19,7 @@ class App {
 
     @Bean
     fun customizer() = WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> {
-        it.setPort(DefaultServicePortMappings.ACTIONBAR_SERVICE_PORT)
+        it.setPort(DefaultServicePortMappings.CURRENCY_SERVICE_PORT)
     }
 }
 

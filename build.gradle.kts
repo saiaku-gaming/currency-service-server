@@ -22,15 +22,15 @@ buildscript {
 		val springBootVersion = "2.0.3.RELEASE"
 		val kotlinVersion = "1.2.61"
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
-		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
-		classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+		classpath("org.jetbrains.kotlin:kotlin-allopen:$kotlinVersion")
 		classpath("org.jetbrains.kotlin:kotlin-noarg:$kotlinVersion")
         classpath("se.transmode.gradle:gradle-docker:1.2")
 	}
 }
 
-`ext`["korlin_version"] = "1.2.61"
-`ext`["spring_boot_version"] = "2.0.3.RELEASE"
+ext["korlin_version"] = "1.2.61"
+ext["spring_boot_version"] = "2.0.3.RELEASE"
 
 apply {
 	plugin("docker")
@@ -62,7 +62,7 @@ plugins {
 //apply plugin: 'application'
 
 group = "com.valhallagame.valhalla"
-version = "1.0-SNAPSHOT"
+version = "1.1-SNAPSHOT"
 setProperty("sourceCompatibility", JavaVersion.VERSION_1_8)
 setProperty("mainClassName", "com.valhallagame.valhalla.currencyserviceserver.AppKt")
 //sourceCompatibility = 1.8
@@ -91,13 +91,13 @@ compileTestKotlin.kotlinOptions.freeCompilerArgs = listOf("-Xjsr305=strict")
 
 repositories {
 	mavenCentral()
-	//mavenLocal()
 	maven {
 		setUrl("https://artifactory.valhalla-game.com/libs-release")
 	}
     maven {
         setUrl("https://artifactory.valhalla-game.com/libs-snapshot")
     }
+	mavenLocal()
 }
 
 
@@ -108,13 +108,14 @@ dependencies {
 	compile("org.flywaydb:flyway-core")
 	compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	compile("org.jetbrains.kotlin:kotlin-reflect")
-    compile("com.valhallagame.valhalla:common:1.0")
-	compile("com.valhallagame.valhalla:actionbar-service-client:1.0")
+    compile("com.valhallagame.valhalla:common:1.1-SNAPSHOT")
+	compile("com.valhallagame.valhalla:currency-service-client:1.0")
 
 	runtime("org.springframework.boot:spring-boot-devtools")
 	runtime("org.postgresql:postgresql")
 
 	testCompile("org.springframework.boot:spring-boot-starter-test")
+	testCompile("com.h2database:h2:1.4.197")
 }
 
 //val docker: DockerTask by tasks
