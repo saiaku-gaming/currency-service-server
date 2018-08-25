@@ -62,7 +62,7 @@ plugins {
 //apply plugin: 'application'
 
 group = "com.valhallagame.valhalla"
-version = "1.1-SNAPSHOT"
+version = "1.0"
 setProperty("sourceCompatibility", JavaVersion.VERSION_1_8)
 setProperty("mainClassName", "com.valhallagame.valhalla.currencyserviceserver.AppKt")
 //sourceCompatibility = 1.8
@@ -138,7 +138,7 @@ tasks.create<DockerTask>("buildDocker") {
 	baseImage = "frolvlad/alpine-oraclejdk8:slim"
 	registry = "https://registry.valhalla-game.com"
 	if(project.hasProperty("tagVersion")) {
-		tagVersion = getProperty("tagVersion") as String
+		tagVersion = project.properties["tagVersion"] as String
 	}
 	push = true
     tag = "registry.valhalla-game.com/saiaku/${application.applicationName}"
