@@ -124,4 +124,15 @@ class CurrencyServiceTest {
 
         currencyService.getCurrency("nisse", CurrencyType.GOLD)
     }
+
+    @Test
+    fun getCurrencies() {
+        val currency = Currency(1, "nisse", CurrencyType.GOLD, 20)
+        `when`(currencyRepository.findCurrencyByCharacterName("nisse")).thenReturn(listOf(currency))
+
+        val currencies = currencyService.getCurrencies("nisse")
+
+        assertEquals(1, currencies.size)
+        assertEquals(currency, currencies[0])
+    }
 }

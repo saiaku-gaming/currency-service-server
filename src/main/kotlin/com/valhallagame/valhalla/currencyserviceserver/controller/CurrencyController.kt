@@ -3,6 +3,7 @@ package com.valhallagame.valhalla.currencyserviceserver.controller
 import com.fasterxml.jackson.databind.JsonNode
 import com.valhallagame.common.JS
 import com.valhallagame.currencyserviceclient.message.AddCurrencyParameter
+import com.valhallagame.currencyserviceclient.message.GetCurrenciesParameter
 import com.valhallagame.currencyserviceclient.message.GetCurrencyParameter
 import com.valhallagame.currencyserviceclient.message.SubtractCurrencyParameter
 import com.valhallagame.valhalla.currencyserviceserver.exception.CurrencyMissingException
@@ -61,4 +62,8 @@ class CurrencyController {
             JS.message(HttpStatus.NOT_FOUND, "Unable to find currency ${input.currencyType.name} for ${input.characterName}")
         }
     }
+
+    @ResponseBody
+    @PostMapping("/get-currencies")
+    fun getCurrencies(@Valid @RequestBody input: GetCurrenciesParameter): ResponseEntity<JsonNode> = JS.message(HttpStatus.OK, currencyService.getCurrencies(input.characterName))
 }

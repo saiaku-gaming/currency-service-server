@@ -44,4 +44,6 @@ class CurrencyService {
     @Throws(CurrencyMissingException::class)
     fun getCurrency(characterName: String, currencyType: CurrencyType)
             = currencyRepository.findCurrencyByCharacterNameAndType(characterName, currencyType) ?: throw CurrencyMissingException("Unable to find currency ${currencyType.name} for $characterName")
+
+    fun getCurrencies(characterName: String) = currencyRepository.findCurrencyByCharacterName(characterName)
 }

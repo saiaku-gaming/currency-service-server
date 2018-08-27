@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface CurrencyRepository : JpaRepository<Currency, Long> {
     fun findCurrencyByCharacterNameAndType(characterName: String, type: CurrencyType): Currency?
+    fun findCurrencyByCharacterName(characterName: String): List<Currency>
 }
