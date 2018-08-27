@@ -1,7 +1,9 @@
 package com.valhallagame.valhalla.currencyserviceserver
 
+import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.valhallagame.currencyserviceclient.message.AddCurrencyParameter
+import com.valhallagame.currencyserviceclient.message.GetCurrenciesParameter
 import com.valhallagame.currencyserviceclient.message.GetCurrencyParameter
 import com.valhallagame.currencyserviceclient.message.SubtractCurrencyParameter
 import com.valhallagame.currencyserviceclient.model.CurrencyType
@@ -148,5 +150,34 @@ class CurrencyControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(input)))
                 .andExpect(status().`is`(404))
+    }
+
+    @Test
+    fun getCurrencies() {
+        val input = GetCurrenciesParameter("nisse")
+        val currency = Currency(1, "nisse", CurrencyType.GOLD, 10)
+
+        `when`(currencyService.getCurrencies(input.characterName)).thenReturn(listOf(currency))
+
+        val result = mvc.perform(post("/v1/currency/get-currencies")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(input)))
+                .andExpect(status().`is`(200))
+                .andReturn()
+
+        val currencies: List<Currency> = objectMapper.readValue(result.response.contentAsString, object : TypeReference<List<Currency>>() {} )
+
+        assertEquals(1, currencies.size)
+        assertEquals(currency, currencies[0])
+    }
+
+    @Test
+    fun getCurrenciesMissingParameter() {
+        val input = GetCurrenciesParameter()
+
+        mvc.perform(post("/v1/currency/get-currencies")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(input)))
+                .andExpect(status().`is`(400))
     }
 }

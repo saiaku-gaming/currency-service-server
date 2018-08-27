@@ -52,7 +52,7 @@ class CurrencyRepositoryTest {
     }
 
     @Test
-    fun findCurrencyByCharacterName() {
+    fun findCurrencyByCharacterNameAndType() {
         val currency = Currency(characterName = "nisse", type = CurrencyType.GOLD, amount = 10)
 
         entityManager.persist(currency)
@@ -76,5 +76,30 @@ class CurrencyRepositoryTest {
         val foundCurrency = currencyRepository.findCurrencyByCharacterNameAndType("hult", CurrencyType.GOLD)
 
         assertNull(foundCurrency)
+    }
+
+    @Test
+    fun findCurrencyByCharacterName() {
+        val currency = Currency(characterName = "nisse", type = CurrencyType.GOLD, amount = 10)
+
+        entityManager.persist(currency)
+        entityManager.flush()
+
+        val foundCurrencies = currencyRepository.findCurrencyByCharacterName("nisse")
+
+        assertEquals(1, foundCurrencies.size)
+        assertEquals(currency, foundCurrencies[0])
+    }
+
+    @Test
+    fun findCurrencyByMissingCharacterName() {
+        val currency = Currency(characterName = "nisse", type = CurrencyType.GOLD, amount = 10)
+
+        entityManager.persist(currency)
+        entityManager.flush()
+
+        val foundCurrencies = currencyRepository.findCurrencyByCharacterName("hult")
+
+        assertEquals(0, foundCurrencies.size)
     }
 }
