@@ -54,11 +54,7 @@ plugins {
 }
 
 group = "com.valhallagame.valhalla"
-<<<<<<< HEAD
-version = "1.2"
-=======
-version = "1.4-SNAPSHOT"
->>>>>>> develop
+version = "1.4"
 
 setProperty("sourceCompatibility", JavaVersion.VERSION_1_8)
 setProperty("mainClassName", "com.valhallagame.valhalla.currencyserviceserver.AppKt")
