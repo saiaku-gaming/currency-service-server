@@ -30,7 +30,7 @@ buildscript {
 		classpath("org.jetbrains.kotlin:kotlin-allopen:$kotlinVersion")
 		classpath("org.jetbrains.kotlin:kotlin-noarg:$kotlinVersion")
         classpath("se.transmode.gradle:gradle-docker:1.2")
-		classpath("com.teamsamst:gitflow:1.3")
+		classpath("com.teamsamst:gitflow:1.7")
 	}
 }
 
@@ -54,7 +54,11 @@ plugins {
 }
 
 group = "com.valhallagame.valhalla"
+<<<<<<< HEAD
 version = "1.2"
+=======
+version = "1.4-SNAPSHOT"
+>>>>>>> develop
 
 setProperty("sourceCompatibility", JavaVersion.VERSION_1_8)
 setProperty("mainClassName", "com.valhallagame.valhalla.currencyserviceserver.AppKt")
