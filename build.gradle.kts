@@ -24,7 +24,7 @@ buildscript {
 	}
 	dependencies {
 		val springBootVersion = "2.0.3.RELEASE"
-		val kotlinVersion = "1.2.61"
+		val kotlinVersion = "1.2.70"
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
 		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
 		classpath("org.jetbrains.kotlin:kotlin-allopen:$kotlinVersion")
@@ -34,7 +34,6 @@ buildscript {
 	}
 }
 
-ext["korlin_version"] = "1.2.61"
 ext["spring_boot_version"] = "2.0.3.RELEASE"
 
 apply {
@@ -43,7 +42,7 @@ apply {
 }
 
 plugins {
-	val kotlinVersion = "1.2.61"
+	val kotlinVersion = "1.2.70"
 	application
 	kotlin("jvm") version kotlinVersion
 	kotlin("plugin.jpa") version kotlinVersion
@@ -87,7 +86,7 @@ dependencies {
 	compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	compile("org.jetbrains.kotlin:kotlin-reflect")
     compile("com.valhallagame.valhalla:common:1.1")
-	compile("com.valhallagame.valhalla:currency-service-client:1.1")
+	compile("com.valhallagame.valhalla:currency-service-client:1.2")
 
 	runtime("org.springframework.boot:spring-boot-devtools")
 	runtime("org.postgresql:postgresql")
