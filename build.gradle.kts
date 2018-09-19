@@ -1,5 +1,7 @@
 import com.github.dockerjava.client.DockerException
+import com.teamsamst.gitflow.GitflowPlugin
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import se.transmode.gradle.plugins.docker.DockerPluginExtension
 import se.transmode.gradle.plugins.docker.DockerTask
 
 /*
@@ -12,6 +14,13 @@ import se.transmode.gradle.plugins.docker.DockerTask
 buildscript {
 	repositories {
 		mavenCentral()
+		maven {
+			setUrl("https://artifactory.valhalla-game.com/libs-release")
+		}
+		maven {
+			setUrl("https://artifactory.valhalla-game.com/libs-snapshot")
+		}
+		mavenLocal()
 	}
 	dependencies {
 		val springBootVersion = "2.0.3.RELEASE"
@@ -21,6 +30,7 @@ buildscript {
 		classpath("org.jetbrains.kotlin:kotlin-allopen:$kotlinVersion")
 		classpath("org.jetbrains.kotlin:kotlin-noarg:$kotlinVersion")
         classpath("se.transmode.gradle:gradle-docker:1.2")
+		classpath("com.teamsamst:gitflow:1.0")
 	}
 }
 
@@ -29,6 +39,7 @@ ext["spring_boot_version"] = "2.0.3.RELEASE"
 
 apply {
 	plugin("docker")
+	plugin("com.teamsamst.gitflow")
 }
 
 plugins {
