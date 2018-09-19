@@ -30,7 +30,7 @@ buildscript {
 		classpath("org.jetbrains.kotlin:kotlin-allopen:$kotlinVersion")
 		classpath("org.jetbrains.kotlin:kotlin-noarg:$kotlinVersion")
         classpath("se.transmode.gradle:gradle-docker:1.2")
-		classpath("com.teamsamst:gitflow:1.0")
+		classpath("com.teamsamst:gitflow:1.1")
 	}
 }
 
