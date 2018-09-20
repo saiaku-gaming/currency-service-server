@@ -68,13 +68,13 @@ compileTestKotlin.kotlinOptions.freeCompilerArgs = listOf("-Xjsr305=strict")
 
 repositories {
 	mavenCentral()
+	mavenLocal()
 	maven {
 		setUrl("https://artifactory.valhalla-game.com/libs-release")
 	}
     maven {
         setUrl("https://artifactory.valhalla-game.com/libs-snapshot")
     }
-	mavenLocal()
 }
 
 
@@ -86,7 +86,7 @@ dependencies {
 	compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	compile("org.jetbrains.kotlin:kotlin-reflect")
     compile("com.valhallagame.valhalla:common:1.1")
-	compile("com.valhallagame.valhalla:currency-service-client:1.2")
+	compile("com.valhallagame.valhalla:currency-service-client:1.3-SNAPSHOT")
 
 	runtime("org.springframework.boot:spring-boot-devtools")
 	runtime("org.postgresql:postgresql")
