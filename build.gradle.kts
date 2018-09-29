@@ -87,7 +87,7 @@ dependencies {
 	compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	compile("org.jetbrains.kotlin:kotlin-reflect")
     compile("com.valhallagame.valhalla:common:1.2")
-	compile("com.valhallagame.valhalla:currency-service-client:1.3-SNAPSHOT")
+	compile("com.valhallagame.valhalla:currency-service-client:1.3")
 
 	runtime("org.springframework.boot:spring-boot-devtools")
 	runtime("org.postgresql:postgresql")
