@@ -53,7 +53,7 @@ plugins {
 }
 
 group = "com.valhallagame.valhalla"
-version = "1.5"
+version = "1.6"
 
 setProperty("sourceCompatibility", JavaVersion.VERSION_1_8)
 setProperty("mainClassName", "com.valhallagame.valhalla.currencyserviceserver.AppKt")
@@ -68,25 +68,26 @@ compileTestKotlin.kotlinOptions.freeCompilerArgs = listOf("-Xjsr305=strict")
 
 repositories {
 	mavenCentral()
+	mavenLocal()
 	maven {
 		setUrl("https://artifactory.valhalla-game.com/libs-release")
 	}
     maven {
         setUrl("https://artifactory.valhalla-game.com/libs-snapshot")
     }
-	mavenLocal()
 }
-
 
 dependencies {
 	compile("org.springframework.boot:spring-boot-starter-data-jpa")
 	compile("org.springframework.boot:spring-boot-starter-web")
 	compile("com.fasterxml.jackson.module:jackson-module-kotlin")
+	compile("com.fasterxml.jackson.datatype:jackson-datatype-jdk8")
+	compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 	compile("org.flywaydb:flyway-core")
 	compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	compile("org.jetbrains.kotlin:kotlin-reflect")
-    compile("com.valhallagame.valhalla:common:1.1")
-	compile("com.valhallagame.valhalla:currency-service-client:1.2")
+    compile("com.valhallagame.valhalla:common:1.2")
+	compile("com.valhallagame.valhalla:currency-service-client:1.3")
 
 	runtime("org.springframework.boot:spring-boot-devtools")
 	runtime("org.postgresql:postgresql")
