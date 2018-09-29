@@ -1,0 +1,2 @@
+ALTER TABLE locked_currency ADD COLUMN locking_id TEXT NOT NULL;
+ALTER TABLE locked_currency ADD COLUMN created TIMESTAMP WITH TIME ZONE NOT NULL;

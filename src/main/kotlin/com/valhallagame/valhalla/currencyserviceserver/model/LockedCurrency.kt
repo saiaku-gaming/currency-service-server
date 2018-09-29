@@ -1,6 +1,7 @@
 package com.valhallagame.valhalla.currencyserviceserver.model
 
 import com.valhallagame.currencyserviceclient.model.CurrencyType
+import java.time.Instant
 import javax.persistence.*
 
 @Entity
@@ -19,5 +20,11 @@ data class LockedCurrency(
         val type: CurrencyType,
 
         @Column(name = "amount")
-        var amount: Int
+        var amount: Int,
+
+        @Column(name = "locking_id")
+        val lockingId: String,
+
+        @Column(name = "created")
+        val created: Instant = Instant.now()
 )

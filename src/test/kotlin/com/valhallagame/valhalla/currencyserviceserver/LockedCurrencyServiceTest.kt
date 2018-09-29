@@ -1,9 +1,9 @@
 package com.valhallagame.valhalla.currencyserviceserver
 
+import com.valhallagame.currencyserviceclient.message.LockCurrencyParameter
 import com.valhallagame.currencyserviceclient.model.CurrencyType
 import com.valhallagame.valhalla.currencyserviceserver.exception.CurrencyMissingException
 import com.valhallagame.valhalla.currencyserviceserver.exception.InsufficientCurrencyException
-import com.valhallagame.valhalla.currencyserviceserver.model.Currency
 import com.valhallagame.valhalla.currencyserviceserver.model.LockedCurrency
 import com.valhallagame.valhalla.currencyserviceserver.repository.LockedCurrencyRepository
 import com.valhallagame.valhalla.currencyserviceserver.service.CurrencyService
@@ -40,40 +40,45 @@ class LockedCurrencyServiceTest {
     private lateinit var currencyService: CurrencyService
 
     @Test
-    fun lockCurrency() {
-        `when`(currencyService.getCurrency("nisse", CurrencyType.GOLD))
-                .thenReturn(Currency(1, "nisse", CurrencyType.GOLD, 100))
-
+    fun lockCurrencies() {
         doAnswer {
             val lockedCurrency = it.arguments[0] as LockedCurrency
-            return@doAnswer LockedCurrency(1, lockedCurrency.characterName, lockedCurrency.type, lockedCurrency.amount)
+            return@doAnswer LockedCurrency(1, lockedCurrency.characterName, lockedCurrency.type, lockedCurrency.amount, "FAKE-ID")
         }.`when`(lockedCurrencyRepository).save(any(LockedCurrency::class.java))
 
-        val lockedCurrency = lockedCurrencyService.lockCurrency("nisse", 50, CurrencyType.GOLD)
+        val lockedCurrency = lockedCurrencyService.lockCurrencies("nisse", listOf(LockCurrencyParameter.Currency(CurrencyType.GOLD, 50)))
 
-        assertEquals(lockedCurrency.id, 1L)
-        assertEquals(lockedCurrency.amount, 50)
-        assertEquals(lockedCurrency.type, CurrencyType.GOLD)
-        assertEquals(lockedCurrency.characterName, "nisse")
+        assertEquals(lockedCurrency[0].id, 1L)
+        assertEquals(lockedCurrency[0].amount, 50)
+        assertEquals(lockedCurrency[0].type, CurrencyType.GOLD)
+        assertEquals(lockedCurrency[0].characterName, "nisse")
     }
 
     @Test(expected = CurrencyMissingException::class)
-    fun lockCurrencyWithoutCurrency() {
-        `when`(currencyService.getCurrency("nisse", CurrencyType.GOLD))
+    fun lockCurrencyWithoutCurrencies() {
+        `when`(currencyService.subtractCurrency("nisse", CurrencyType.GOLD, 50))
                 .thenThrow(CurrencyMissingException("Currency Missing"))
-        lockedCurrencyService.lockCurrency("nisse", 50, CurrencyType.GOLD)
+        lockedCurrencyService.lockCurrencies("nisse", listOf(LockCurrencyParameter.Currency(CurrencyType.GOLD, 50)))
     }
 
     @Test(expected = InsufficientCurrencyException::class)
-    fun lockCurrencyWithInsufficientCurrency() {
-        `when`(currencyService.getCurrency("nisse", CurrencyType.GOLD))
-                .thenReturn(Currency(1, "nisse", CurrencyType.GOLD, 10))
+    fun lockCurrencyWithInsufficientCurrencies() {
+        `when`(currencyService.subtractCurrency("nisse", CurrencyType.GOLD, 50))
+                .thenThrow(InsufficientCurrencyException("Not enough currencies"))
 
-        doAnswer {
-            val lockedCurrency = it.arguments[0] as LockedCurrency
-            return@doAnswer LockedCurrency(1, lockedCurrency.characterName, lockedCurrency.type, lockedCurrency.amount)
-        }.`when`(lockedCurrencyRepository).save(any(LockedCurrency::class.java))
+        lockedCurrencyService.lockCurrencies("nisse", listOf(LockCurrencyParameter.Currency(CurrencyType.GOLD, 50)))
+    }
 
-        lockedCurrencyService.lockCurrency("nisse", 50, CurrencyType.GOLD)
+    @Test
+    fun abortLockedCurrencies() {
+        `when`(lockedCurrencyRepository.findLockedCurrencyByLockingId("FAKE-ID"))
+                .thenReturn(listOf(LockedCurrency(1, "nisse", CurrencyType.GOLD, 10, "FAKE-ID")))
+
+        lockedCurrencyService.abortLockedCurrencies("FAKE-ID")
+    }
+
+    @Test
+    fun commitLockedCurrencies() {
+        lockedCurrencyService.commitLockedCurrencies("FAKE-ID")
     }
 }

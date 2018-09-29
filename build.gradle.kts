@@ -77,15 +77,16 @@ repositories {
     }
 }
 
-
 dependencies {
 	compile("org.springframework.boot:spring-boot-starter-data-jpa")
 	compile("org.springframework.boot:spring-boot-starter-web")
 	compile("com.fasterxml.jackson.module:jackson-module-kotlin")
+	compile("com.fasterxml.jackson.datatype:jackson-datatype-jdk8")
+	compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 	compile("org.flywaydb:flyway-core")
 	compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	compile("org.jetbrains.kotlin:kotlin-reflect")
-    compile("com.valhallagame.valhalla:common:1.1")
+    compile("com.valhallagame.valhalla:common:1.2")
 	compile("com.valhallagame.valhalla:currency-service-client:1.3-SNAPSHOT")
 
 	runtime("org.springframework.boot:spring-boot-devtools")
