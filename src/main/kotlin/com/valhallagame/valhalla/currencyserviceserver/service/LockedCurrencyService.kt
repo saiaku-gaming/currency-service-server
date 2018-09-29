@@ -47,4 +47,12 @@ class LockedCurrencyService {
     }
 
     fun commitLockedCurrencies(lockedId: String) = lockedCurrencyRepository.deleteLockedCurrencyByLockingId(lockedId)
+
+    fun abortStaleLockedCurrencies() {
+        val lockingIds = lockedCurrencyRepository.findOldLockedCurrencyLockingIds()
+
+        lockingIds.forEach {
+            abortLockedCurrencies(it)
+        }
+    }
 }
