@@ -1,5 +1,4 @@
 import com.github.dockerjava.client.DockerException
-import com.teamsamst.gitflow.GitflowPlugin
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import se.transmode.gradle.plugins.docker.DockerPluginExtension
 import se.transmode.gradle.plugins.docker.DockerTask
@@ -30,7 +29,6 @@ buildscript {
 		classpath("org.jetbrains.kotlin:kotlin-allopen:$kotlinVersion")
 		classpath("org.jetbrains.kotlin:kotlin-noarg:$kotlinVersion")
         classpath("se.transmode.gradle:gradle-docker:1.2")
-		classpath("com.teamsamst:gitflow:1.7")
 	}
 }
 
@@ -38,7 +36,6 @@ ext["spring_boot_version"] = "2.0.3.RELEASE"
 
 apply {
 	plugin("docker")
-	plugin("com.teamsamst.gitflow")
 }
 
 plugins {
