@@ -86,8 +86,8 @@ dependencies {
 	compile("org.flywaydb:flyway-core")
 	compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	compile("org.jetbrains.kotlin:kotlin-reflect")
-    compile("com.valhallagame.valhalla:common:1.2")
-	compile("com.valhallagame.valhalla:currency-service-client:1.4")
+    compile("com.valhallagame.valhalla:common:1.3")
+	compile("com.valhallagame.valhalla:currency-service-client:1.5")
 
 	runtime("org.springframework.boot:spring-boot-devtools")
 	runtime("org.postgresql:postgresql")
