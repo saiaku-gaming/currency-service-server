@@ -12,9 +12,9 @@ import java.io.FileInputStream
 import java.util.*
 
 @SpringBootApplication
-class App {
+class CurrencyApp {
     companion object {
-        val logger: Logger = LoggerFactory.getLogger(App::class.java)
+        val logger: Logger = LoggerFactory.getLogger(CurrencyApp::class.java)
     }
 
     @Bean
@@ -25,8 +25,8 @@ class App {
 
 fun main(args: Array<String>) {
     if (args.isNotEmpty()) {
-        if (App.logger.isInfoEnabled) {
-            App.logger.info("Args passed in: {}", Arrays.asList(args))
+        if (CurrencyApp.logger.isInfoEnabled) {
+            CurrencyApp.logger.info("Args passed in: {}", Arrays.asList(args))
         }
 
         args.forEach {
@@ -41,8 +41,8 @@ fun main(args: Array<String>) {
             }
         }
     } else {
-        App.logger.info("No args passed to main")
+        CurrencyApp.logger.info("No args passed to main")
     }
 
-    runApplication<App>(*args)
+    runApplication<CurrencyApp>(*args)
 }
