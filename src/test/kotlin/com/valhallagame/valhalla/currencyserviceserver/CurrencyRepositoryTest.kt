@@ -102,4 +102,16 @@ class CurrencyRepositoryTest {
 
         assertEquals(0, foundCurrencies.size)
     }
+
+    @Test
+    fun deleteByCharacterName() {
+        val currency = Currency(characterName = "nisse", type = CurrencyType.GOLD, amount = 10)
+
+        entityManager.persist(currency)
+        entityManager.flush()
+
+        currencyRepository.deleteCurrencyByCharacterName("nisse")
+
+        assertNull(entityManager.find(Currency::class.java, currency.id))
+    }
 }
