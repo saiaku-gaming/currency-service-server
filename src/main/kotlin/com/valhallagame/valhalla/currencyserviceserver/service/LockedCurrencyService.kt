@@ -55,4 +55,8 @@ class LockedCurrencyService {
             abortLockedCurrencies(it)
         }
     }
+
+    fun deleteLockedCurrencyByCharacterName(characterName: String) {
+        lockedCurrencyRepository.deleteLockedCurrencyByCharacterName(characterName)
+    }
 }
