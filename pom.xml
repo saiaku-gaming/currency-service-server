@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>currency-service-server</artifactId>
-	<version>1.11</version>
+	<version>1.12</version>
 	<packaging>jar</packaging>
 	<groupId>com.valhallagame.valhalla</groupId>
 
@@ -48,7 +48,7 @@
         <dependency>
             <groupId>com.valhallagame.valhalla</groupId>
             <artifactId>common</artifactId>
-            <version>1.5</version>
+			<version>1.7</version>
         </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -87,14 +87,14 @@
 		</dependency>
 		<dependency>
 			<groupId>org.jetbrains.kotlin</groupId>
-			<artifactId>kotlin-test</artifactId>
-			<version>${kotlin.version}</version>
+			<artifactId>kotlin-test-junit</artifactId>
+            <version>${kotlin.version}</version>
 			<scope>test</scope>
 		</dependency>
         <dependency>
             <groupId>com.valhallagame.valhalla</groupId>
             <artifactId>currency-service-client</artifactId>
-            <version>1.6</version>
+            <version>1.7</version>
         </dependency>
     </dependencies>
 
