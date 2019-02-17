@@ -5,12 +5,17 @@ import com.valhallagame.valhalla.currencyserviceserver.exception.CurrencyMissing
 import com.valhallagame.valhalla.currencyserviceserver.exception.InsufficientCurrencyException
 import com.valhallagame.valhalla.currencyserviceserver.model.LockedCurrency
 import com.valhallagame.valhalla.currencyserviceserver.repository.LockedCurrencyRepository
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
 class LockedCurrencyService {
+    companion object {
+        private val logger = LoggerFactory.getLogger(LockedCurrencyService::class.java)
+    }
+
     @Autowired
     private lateinit var lockedCurrencyRepository: LockedCurrencyRepository
 
@@ -19,6 +24,7 @@ class LockedCurrencyService {
 
     @Throws(CurrencyMissingException::class, InsufficientCurrencyException::class)
     fun lockCurrencies(characterName: String, currencies: List<LockCurrencyParameter.Currency>): List<LockedCurrency> {
+        logger.info("Locking currencies {} for {}", currencies, characterName)
         val lockedCurrencies = mutableListOf<LockedCurrency>()
         val lockingId = UUID.randomUUID().toString()
 
@@ -38,6 +44,7 @@ class LockedCurrencyService {
     }
 
     fun abortLockedCurrencies(lockingId: String) {
+        logger.info("Aborting locked currecies with id {}", lockingId)
         val lockedCurrencies = lockedCurrencyRepository.findLockedCurrencyByLockingId(lockingId)
 
         lockedCurrencies.forEach {
@@ -46,9 +53,13 @@ class LockedCurrencyService {
         }
     }
 
-    fun commitLockedCurrencies(lockedId: String) = lockedCurrencyRepository.deleteLockedCurrencyByLockingId(lockedId)
+    fun commitLockedCurrencies(lockedId: String) {
+        logger.info("Commiting locked currencies with id {}", lockedId)
+        lockedCurrencyRepository.deleteLockedCurrencyByLockingId(lockedId)
+    }
 
     fun abortStaleLockedCurrencies() {
+        logger.info("Aborting stale locked currencies")
         val lockingIds = lockedCurrencyRepository.findOldLockedCurrencyLockingIds()
 
         lockingIds.forEach {
@@ -57,6 +68,7 @@ class LockedCurrencyService {
     }
 
     fun deleteLockedCurrencyByCharacterName(characterName: String) {
+        logger.info("Deleting all locked currencies for {}", characterName)
         lockedCurrencyRepository.deleteLockedCurrencyByCharacterName(characterName)
     }
 }
