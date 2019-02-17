@@ -23,7 +23,9 @@ import javax.validation.Valid
 @Controller
 @RequestMapping(path = ["/v1/currency"])
 class CurrencyController {
-    private val logger = LoggerFactory.getLogger(CurrencyController::class.java)
+    companion object {
+        private val logger = LoggerFactory.getLogger(CurrencyController::class.java)
+    }
 
     @Autowired
     private lateinit var currencyService: CurrencyService
@@ -31,6 +33,7 @@ class CurrencyController {
     @ResponseBody
     @PostMapping("/add-currency")
     fun addCurrency(@Valid @RequestBody input: AddCurrencyParameter): ResponseEntity<JsonNode> {
+        logger.info("Add Currency called with {}", input)
         val addedCurrency = currencyService.addCurrency(input.characterName, input.currencyType, input.amount)
 
         return JS.message(HttpStatus.OK, addedCurrency)
@@ -39,6 +42,7 @@ class CurrencyController {
     @ResponseBody
     @PostMapping("/subtract-currency")
     fun subtractCurrency(@Valid @RequestBody input: SubtractCurrencyParameter): ResponseEntity<JsonNode> {
+        logger.info("Subtract Currency called with {}", input)
         return try {
             val removedCurrency = currencyService.subtractCurrency(input.characterName, input.currencyType, input.amount)
             JS.message(HttpStatus.OK, removedCurrency)
@@ -54,6 +58,7 @@ class CurrencyController {
     @ResponseBody
     @PostMapping("/get-currency")
     fun getCurrency(@Valid @RequestBody input: GetCurrencyParameter): ResponseEntity<JsonNode> {
+        logger.info("Get Currency called with {}", input)
         return try {
             val currency = currencyService.getCurrency(input.characterName, input.currencyType)
             JS.message(HttpStatus.OK, currency)
@@ -65,5 +70,8 @@ class CurrencyController {
 
     @ResponseBody
     @PostMapping("/get-currencies")
-    fun getCurrencies(@Valid @RequestBody input: GetCurrenciesParameter): ResponseEntity<JsonNode> = JS.message(HttpStatus.OK, currencyService.getCurrencies(input.characterName))
+    fun getCurrencies(@Valid @RequestBody input: GetCurrenciesParameter): ResponseEntity<JsonNode> {
+        logger.info("Get Currencies called with {}", input)
+        return JS.message(HttpStatus.OK, currencyService.getCurrencies(input.characterName))
+    }
 }
