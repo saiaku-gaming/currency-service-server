@@ -9,6 +9,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
+import java.lang.Exception
 import java.util.*
 
 @Component
@@ -37,6 +38,8 @@ class CurrencyConsumer
             val characterName = notificationMessage.data["characterName"] as String
             currencyService.deleteCurrencyByCharacterName(characterName)
             lockedCurrencyService.deleteLockedCurrencyByCharacterName(characterName)
+        } catch(e: Exception) {
+            logger.error("Error while processing Character Delete notification", e)
         } finally {
             MDC.clear()
         }
