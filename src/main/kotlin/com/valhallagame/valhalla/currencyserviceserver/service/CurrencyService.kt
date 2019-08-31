@@ -1,6 +1,7 @@
 package com.valhallagame.valhalla.currencyserviceserver.service
 
 import com.valhallagame.currencyserviceclient.model.CurrencyType
+import com.valhallagame.featserviceclient.message.FeatName
 import com.valhallagame.valhalla.currencyserviceserver.exception.CurrencyMissingException
 import com.valhallagame.valhalla.currencyserviceserver.exception.InsufficientCurrencyException
 import com.valhallagame.valhalla.currencyserviceserver.model.Currency
@@ -64,5 +65,51 @@ class CurrencyService {
     fun deleteCurrencyByCharacterName(characterName: String) {
         logger.info("Deleting all currencies for {}", characterName)
         currencyRepository.deleteCurrencyByCharacterName(characterName)
+    }
+
+    fun addCurrencyFromFeat(characterName: String, featName: FeatName) {
+        logger.info("Adding currency from feat {} for {}", featName, characterName)
+        when (featName) {
+            FeatName.MISSVEDEN_THE_CHIEFTAINS_DEMISE -> {
+                addCurrency(characterName, CurrencyType.GOLD, 30)
+            }
+            FeatName.MISSVEDEN_SAXUMPHILE -> {
+                addCurrency(characterName, CurrencyType.GOLD, 20)
+            }
+            FeatName.MISSVEDEN_DENIED -> {
+                addCurrency(characterName, CurrencyType.GOLD, 20)
+            }
+            FeatName.MISSVEDEN_TREADING_WITH_GREAT_CARE -> {
+                addCurrency(characterName, CurrencyType.GOLD, 20)
+            }
+            FeatName.MISSVEDEN_NO_LESSER_FOES -> {
+                addCurrency(characterName, CurrencyType.GOLD, 20)
+            }
+            FeatName.MISSVEDEN_A_CRYSTAL_CLEAR_MYSTERY -> {
+                addCurrency(characterName, CurrencyType.GOLD, 20)
+            }
+            FeatName.FREDSTORP_THIEF_OF_THIEVES -> {
+                addCurrency(characterName, CurrencyType.GOLD, 30)
+            }
+            FeatName.FREDSTORP_SPEEDRUNNER -> {
+                addCurrency(characterName, CurrencyType.GOLD, 20)
+            }
+            FeatName.FREDSTORP_GAMBLER -> {
+                addCurrency(characterName, CurrencyType.GOLD, 20)
+            }
+            FeatName.FREDSTORP_ANORECTIC -> {
+                addCurrency(characterName, CurrencyType.GOLD, 20)
+            }
+            FeatName.FREDSTORP_NEVER_BEEN_BETTER -> {
+                addCurrency(characterName, CurrencyType.GOLD, 20)
+            }
+            FeatName.FREDSTORP_EXTRACTOR -> {
+                addCurrency(characterName, CurrencyType.GOLD, 20)
+            }
+            FeatName.HJUO_EXPLORER -> {
+                addCurrency(characterName, CurrencyType.GOLD, 50)
+            }
+            else -> {}
+        }
     }
 }

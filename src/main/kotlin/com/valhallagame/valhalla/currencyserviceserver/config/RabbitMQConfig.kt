@@ -17,6 +17,21 @@ class RabbitMQConfig {
     fun characterExchange() = DirectExchange(RabbitMQRouting.Exchange.CHARACTER.name)
 
     @Bean
+    fun featExchange(): DirectExchange {
+        return DirectExchange(RabbitMQRouting.Exchange.FEAT.name)
+    }
+
+    @Bean
+    fun currencyFeatAddQueue(): Queue {
+        return Queue("currencyFeatAddQueue")
+    }
+
+    @Bean
+    fun bindingFeatAdd(featExchange: DirectExchange, currencyFeatAddQueue: Queue): Binding {
+        return BindingBuilder.bind(currencyFeatAddQueue).to(featExchange).with(RabbitMQRouting.Feat.ADD)
+    }
+
+    @Bean
     fun currencyCharacterDeleteQueue() = Queue("currencyCharacterDeleteQueue")
 
     @Bean
