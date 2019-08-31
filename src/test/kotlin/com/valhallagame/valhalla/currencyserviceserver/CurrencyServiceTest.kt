@@ -1,5 +1,7 @@
 package com.valhallagame.valhalla.currencyserviceserver
 
+import com.valhallagame.characterserviceclient.CharacterServiceClient
+import com.valhallagame.common.rabbitmq.RabbitSender
 import com.valhallagame.currencyserviceclient.model.CurrencyType
 import com.valhallagame.valhalla.currencyserviceserver.exception.CurrencyMissingException
 import com.valhallagame.valhalla.currencyserviceserver.exception.InsufficientCurrencyException
@@ -26,8 +28,18 @@ class CurrencyServiceTest {
     @TestConfiguration
     class CurrencyServiceTestContextConfiguration {
         @Bean
+        fun rabbitSender(): RabbitSender {
+            return Mockito.mock(RabbitSender::class.java)
+        }
+
+        @Bean
         fun currencyService(): CurrencyService {
             return CurrencyService()
+        }
+
+        @Bean
+        fun characterServiceClient(): CharacterServiceClient {
+            return CharacterServiceClient.get()
         }
     }
 

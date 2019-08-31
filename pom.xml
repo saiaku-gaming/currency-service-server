@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>currency-service-server</artifactId>
-	<version>1.21</version>
+	<version>1.22</version>
 	<packaging>jar</packaging>
 	<groupId>com.valhallagame.valhalla</groupId>
 
@@ -47,12 +47,17 @@
         <dependency>
             <groupId>com.valhallagame.valhalla</groupId>
             <artifactId>common</artifactId>
-            <version>1.17</version>
+            <version>1.18</version>
         </dependency>
 		<dependency>
 			<groupId>com.valhallagame.valhalla</groupId>
 			<artifactId>feat-service-client</artifactId>
 			<version>1.7</version>
+		</dependency>
+		<dependency>
+			<groupId>com.valhallagame.valhalla</groupId>
+			<artifactId>character-service-client</artifactId>
+			<version>1.11</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
