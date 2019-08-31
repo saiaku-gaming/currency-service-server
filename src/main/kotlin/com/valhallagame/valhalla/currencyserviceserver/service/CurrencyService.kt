@@ -1,5 +1,9 @@
 package com.valhallagame.valhalla.currencyserviceserver.service
 
+import com.valhallagame.characterserviceclient.CharacterServiceClient
+import com.valhallagame.common.rabbitmq.NotificationMessage
+import com.valhallagame.common.rabbitmq.RabbitMQRouting
+import com.valhallagame.common.rabbitmq.RabbitSender
 import com.valhallagame.currencyserviceclient.model.CurrencyType
 import com.valhallagame.featserviceclient.message.FeatName
 import com.valhallagame.valhalla.currencyserviceserver.exception.CurrencyMissingException
@@ -19,7 +23,13 @@ class CurrencyService {
     @Autowired
     private lateinit var currencyRepository: CurrencyRepository
 
-    fun addCurrency(characterName: String, currencyType: CurrencyType, amount: Int): Currency {
+    @Autowired
+    private lateinit var characterServiceClient: CharacterServiceClient
+
+    @Autowired
+    private lateinit var rabbitSender: RabbitSender
+
+    fun addCurrency(characterName: String, currencyType: CurrencyType, amount: Int, notify: Boolean = false): Currency {
         logger.info("Adding {} {} currency to {}", amount, currencyType, characterName)
         if(amount < 0) {
             logger.error("Tried to add a negative amount {}", amount)
@@ -28,7 +38,23 @@ class CurrencyService {
 
         val currentCurrency = currencyRepository.findCurrencyByCharacterNameAndType(characterName, currencyType) ?: Currency(characterName = characterName, type = currencyType, amount = 0)
         currentCurrency.amount += amount
-        return currencyRepository.save(currentCurrency)
+
+        val savedCurrency = currencyRepository.save(currentCurrency)
+
+        if(notify) {
+            val response = characterServiceClient.getCharacter(characterName)
+
+            if(response.isOk) {
+                val message = NotificationMessage(response.get().get().ownerUsername, "Currency Added").apply {
+                    addData("currency", currencyType)
+                    addData("amount", amount)
+                }
+                rabbitSender.sendMessage(RabbitMQRouting.Exchange.CURRENCY, RabbitMQRouting.Currency.ADD.name, message)
+            }
+
+        }
+
+        return savedCurrency
     }
 
     // Annotation not needed in Kotlin. Is only there to make mockito happy
@@ -71,43 +97,43 @@ class CurrencyService {
         logger.info("Adding currency from feat {} for {}", featName, characterName)
         when (featName) {
             FeatName.MISSVEDEN_THE_CHIEFTAINS_DEMISE -> {
-                addCurrency(characterName, CurrencyType.GOLD, 30)
+                addCurrency(characterName, CurrencyType.GOLD, 30, true)
             }
             FeatName.MISSVEDEN_SAXUMPHILE -> {
-                addCurrency(characterName, CurrencyType.GOLD, 20)
+                addCurrency(characterName, CurrencyType.GOLD, 20, true)
             }
             FeatName.MISSVEDEN_DENIED -> {
-                addCurrency(characterName, CurrencyType.GOLD, 20)
+                addCurrency(characterName, CurrencyType.GOLD, 20, true)
             }
             FeatName.MISSVEDEN_TREADING_WITH_GREAT_CARE -> {
-                addCurrency(characterName, CurrencyType.GOLD, 20)
+                addCurrency(characterName, CurrencyType.GOLD, 20, true)
             }
             FeatName.MISSVEDEN_NO_LESSER_FOES -> {
-                addCurrency(characterName, CurrencyType.GOLD, 20)
+                addCurrency(characterName, CurrencyType.GOLD, 20, true)
             }
             FeatName.MISSVEDEN_A_CRYSTAL_CLEAR_MYSTERY -> {
-                addCurrency(characterName, CurrencyType.GOLD, 20)
+                addCurrency(characterName, CurrencyType.GOLD, 20, true)
             }
             FeatName.FREDSTORP_THIEF_OF_THIEVES -> {
-                addCurrency(characterName, CurrencyType.GOLD, 30)
+                addCurrency(characterName, CurrencyType.GOLD, 30, true)
             }
             FeatName.FREDSTORP_SPEEDRUNNER -> {
-                addCurrency(characterName, CurrencyType.GOLD, 20)
+                addCurrency(characterName, CurrencyType.GOLD, 20, true)
             }
             FeatName.FREDSTORP_GAMBLER -> {
-                addCurrency(characterName, CurrencyType.GOLD, 20)
+                addCurrency(characterName, CurrencyType.GOLD, 20, true)
             }
             FeatName.FREDSTORP_ANORECTIC -> {
-                addCurrency(characterName, CurrencyType.GOLD, 20)
+                addCurrency(characterName, CurrencyType.GOLD, 20, true)
             }
             FeatName.FREDSTORP_NEVER_BEEN_BETTER -> {
-                addCurrency(characterName, CurrencyType.GOLD, 20)
+                addCurrency(characterName, CurrencyType.GOLD, 20, true)
             }
             FeatName.FREDSTORP_EXTRACTOR -> {
-                addCurrency(characterName, CurrencyType.GOLD, 20)
+                addCurrency(characterName, CurrencyType.GOLD, 20, true)
             }
             FeatName.HJUO_EXPLORER -> {
-                addCurrency(characterName, CurrencyType.GOLD, 50)
+                addCurrency(characterName, CurrencyType.GOLD, 50, true)
             }
             else -> {}
         }
