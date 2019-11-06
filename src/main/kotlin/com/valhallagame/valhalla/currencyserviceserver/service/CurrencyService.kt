@@ -96,43 +96,28 @@ class CurrencyService {
     fun addCurrencyFromFeat(characterName: String, featName: FeatName) {
         logger.info("Adding currency from feat {} for {}", featName, characterName)
         when (featName) {
-            FeatName.MISSVEDEN_THE_CHIEFTAINS_DEMISE -> {
-                addCurrency(characterName, CurrencyType.GOLD, 30, true)
-            }
             FeatName.MISSVEDEN_SAXUMPHILE -> {
-                addCurrency(characterName, CurrencyType.GOLD, 20, true)
-            }
-            FeatName.MISSVEDEN_DENIED -> {
-                addCurrency(characterName, CurrencyType.GOLD, 20, true)
-            }
-            FeatName.MISSVEDEN_TREADING_WITH_GREAT_CARE -> {
-                addCurrency(characterName, CurrencyType.GOLD, 20, true)
+                addCurrency(characterName, CurrencyType.GOLD, 50, true)
             }
             FeatName.MISSVEDEN_NO_LESSER_FOES -> {
-                addCurrency(characterName, CurrencyType.GOLD, 20, true)
-            }
-            FeatName.MISSVEDEN_A_CRYSTAL_CLEAR_MYSTERY -> {
-                addCurrency(characterName, CurrencyType.GOLD, 20, true)
-            }
-            FeatName.FREDSTORP_THIEF_OF_THIEVES -> {
-                addCurrency(characterName, CurrencyType.GOLD, 30, true)
-            }
-            FeatName.FREDSTORP_SPEEDRUNNER -> {
-                addCurrency(characterName, CurrencyType.GOLD, 20, true)
-            }
-            FeatName.FREDSTORP_GAMBLER -> {
-                addCurrency(characterName, CurrencyType.GOLD, 20, true)
+                addCurrency(characterName, CurrencyType.GOLD, 50, true)
             }
             FeatName.FREDSTORP_ANORECTIC -> {
-                addCurrency(characterName, CurrencyType.GOLD, 20, true)
+                addCurrency(characterName, CurrencyType.GOLD, 50, true)
             }
-            FeatName.FREDSTORP_NEVER_BEEN_BETTER -> {
-                addCurrency(characterName, CurrencyType.GOLD, 20, true)
+            FeatName.FREDSTORP_EXTERMINATOR -> {
+                addCurrency(characterName, CurrencyType.IRON, 100, true)
+                addCurrency(characterName, CurrencyType.WOOD, 100, true)
+                addCurrency(characterName, CurrencyType.GOLD, 200, true)
+                addCurrency(characterName, CurrencyType.CONCENTRATED_HATRED, 2, true)
             }
-            FeatName.FREDSTORP_EXTRACTOR -> {
-                addCurrency(characterName, CurrencyType.GOLD, 20, true)
+            FeatName.HJUO_LIKE_THE_WIND -> {
+                addCurrency(characterName, CurrencyType.GOLD, 50, true)
             }
-            FeatName.HJUO_EXPLORER -> {
+            FeatName.HJUO_PRECAUTIONS -> {
+                addCurrency(characterName, CurrencyType.GOLD, 50, true)
+            }
+            FeatName.HJUO_THERMAL_VELOCITY -> {
                 addCurrency(characterName, CurrencyType.GOLD, 50, true)
             }
             else -> {}
